@@ -1,5 +1,6 @@
 using FluentAssertions;
 using NSubstitute;
+using NUnit.Framework.Internal;
 using WebApplication1;
 using WebApplication1.Model;
 using WebApplication1.Repo;
@@ -54,8 +55,9 @@ public class BudgetTests
         });
         
         var budgetService = new BudgetService(budgetRepo);
-        var result = budgetService.Query(new DateTime(2023,1,1), new DateTime(2023,1,15));
-        result.Should().Be(1500);
+        var result = budgetService.Query(new DateTime(2022,12,25), new DateTime(2023,2, 10));
+        result.Should().Be(4800);
     }
 
+    
 }

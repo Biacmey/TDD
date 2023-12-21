@@ -19,7 +19,7 @@ public class BudgetService
         {
             var yearMonth = DateTime.ParseExact(x.YearMonth, "yyyyMM", null);
 
-            return new DateTime(startDate.Year,startDate.Month,1) <= yearMonth && new DateTime(startDate.Year,startDate.Month,1) >= yearMonth;
+            return new DateTime(startDate.Year,startDate.Month,1) <= yearMonth && new DateTime(endDate.Year,endDate.Month,1) >= yearMonth;
         });
         var amountIndex = includeBudget.Select(s =>
         {
@@ -30,7 +30,7 @@ public class BudgetService
         var result = 0;
         foreach (var amount in amountIndex)
         {
-            if (startDate > amount.FirstDayOfMonth && (endDate > amount.FirstDayOfMonth))
+            if (startDate > amount.FirstDayOfMonth && (endDate > amount.FirstDayOfMonth.AddMonths(1)))
             {
                 var days = DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1;
                 result += days * amount.AmountByDay;
@@ -49,7 +49,7 @@ public class BudgetService
             }
             else
             {
-                var days = DateTime.DaysInMonth(endDate.Year, endDate.Month);
+                var days = DateTime.DaysInMonth(amount.FirstDayOfMonth.Year, amount.FirstDayOfMonth.Month);
                 result += days * amount.AmountByDay;
             }
         }
