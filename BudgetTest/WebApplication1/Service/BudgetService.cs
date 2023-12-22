@@ -40,10 +40,10 @@ public class BudgetService
                 var days = endDate.Day;
                 result += days * amount.AmountByDay;
             }
-            else if (startDate > amount.FirstDayOfMonth && (endDate < amount.FirstDayOfMonth))
+            else if (startDate > amount.FirstDayOfMonth && (endDate < amount.FirstDayOfMonth.AddMonths(1)))
             {
                 var daysStart = DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1;
-                var daysEnd = DateTime.DaysInMonth(endDate.Year, endDate.Month) - endDate.Day + 1;
+                var daysEnd =  endDate.Day;
                 var days = daysStart + daysEnd - DateTime.DaysInMonth(startDate.Year, startDate.Month);
                 result += days * amount.AmountByDay;
             }

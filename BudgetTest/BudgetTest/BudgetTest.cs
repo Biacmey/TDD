@@ -32,11 +32,33 @@ public class BudgetTests
         result.Should().Be(3100);
     }
     [Test]
+    public void partical_onoe_month()
+    {
+        var budgetRepo = Substitute.For<IBudgetRepo>();
+        budgetRepo.GetAll().Returns(new List<Budget>()
+        {
+            new Budget()
+            {
+                YearMonth = "202302",
+                Amount = 2800,
+            }
+        });
+        
+        var budgetService = new BudgetService(budgetRepo);
+        var result = budgetService.Query(new DateTime(2023,2,5), new DateTime(2023,2,14));
+        result.Should().Be(1000);
+    }
+    [Test]
     public void partical_month()
     {
         var budgetRepo = Substitute.For<IBudgetRepo>();
         budgetRepo.GetAll().Returns(new List<Budget>()
         {
+            new Budget()
+            {
+                YearMonth = "202212",
+                Amount = 3100,
+            },
             new Budget()
             {
                 YearMonth = "202301",
@@ -46,11 +68,6 @@ public class BudgetTests
             {
                 YearMonth = "202302",
                 Amount = 2800,
-            },
-            new Budget()
-            {
-                YearMonth = "202212",
-                Amount = 3100,
             },
         });
         
